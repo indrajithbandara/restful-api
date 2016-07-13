@@ -18,7 +18,7 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/passport');
 
 //routes
-require('./app/routes.js')(app); // load our routes and pass in our app
+require('./app/routes.js')(app, router); // load our routes and pass in our app
 
 app.listen(app.get('port'), function(){
     console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
