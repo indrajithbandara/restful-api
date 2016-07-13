@@ -17,8 +17,15 @@ var router = express.Router();
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/passport');
 
+router.use(function(req, res, next) {
+    console.log('Middleware!');
+    next();
+});
+//all routes will use /api
+app.use('/api', router);
+
 //routes
-require('./app/routes.js')(app, router); // load our routes and pass in our app
+require('./app/routes.js')(app, router, mongoose); // load our routes and pass in our app
 
 app.listen(app.get('port'), function(){
     console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
