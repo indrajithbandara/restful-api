@@ -1,0 +1,22 @@
+{
+  "name": "restful-api",
+  "version": "1.0.0",
+  "description": "restful api implementation in node with express",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrew310/restful-api.git"
+  },
+  "author": "andrew brown",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrew310/restful-api/issues"
+  },
+  "homepage": "https://github.com/andrew310/restful-api#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
