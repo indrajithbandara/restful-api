@@ -11,13 +11,14 @@ app.use(bodyParser.json());
 app.set('port', 8080);
 
 //instance of express router
-var router = express.Router(); 
+var router = express.Router();
 
-router.get('/', function(req, res){
-    res.json({payload: "hello world!!"});
-});
+//database setup
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/passport');
 
-app.use('/api', router);
+//routes
+require('./app/routes.js')(app); // load our routes and pass in our app
 
 app.listen(app.get('port'), function(){
     console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
