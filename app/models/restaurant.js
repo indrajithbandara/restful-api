@@ -14,7 +14,7 @@ var RestaurantSchema = new Schema({
 RestaurantSchema.pre('remove', function(next){
     console.log('removing restaurant from associated cities...\n');
     this.model('City').update(
-        {restaurants: {$in: this.restaurants}},
+        {restaurants: this._id},
         {$pull: { restaurants: this._id}},
         {multi: true},
         next
