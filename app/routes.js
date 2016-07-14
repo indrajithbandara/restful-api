@@ -42,7 +42,7 @@ module.exports = function(app, router, mongoose) {
 
     /*SPECIFIC TO ONE CITY*/
     //route to get by id, working with single items
-    router.route('/cities/:cities_id')
+    router.route('/cities/:city_id')
         //will return and display the json for that specific city
         .get(function(req, res){
             City.findById(req.params.city_id, function(err, city){
