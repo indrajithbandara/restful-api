@@ -231,15 +231,20 @@ module.exports = function(app, router, mongoose) {
 
         //delete a restaurant entry
         .delete(function(req, res) {
-            Restaurant.remove({
-                _id: req.params.restaurant_id
-            }, function(err, restaurant) {
-                if (err)
+            Restaurant.findById(req.params.restaurant_id, function(err, restaurant){
+                if (err) {
                     res.send(err);
-
-                res.json({ message: 'Successfully deleted' });
+                }
+                //remove document
+                restaurant.remove(function(err){
+                    if (err) {
+                        res.send(err);
+                    }
+                    res.json({payload: 'Restaurant Deleted!'});
+                });
             });
-        });
+        });//end of delete
+        //END OF
 
     /***************************************
           RESTAURANT / DISH ASSOCIATION
