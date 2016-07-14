@@ -355,15 +355,20 @@ module.exports = function(app, router, mongoose) {
 
         //delete a dish entry
         .delete(function(req, res) {
-            Dish.remove({
-                _id: req.params.dish_id
-            }, function(err, dish) {
-                if (err)
+            Dish.findById(req.params.dish_id, function(err, dish){
+                if (err) {
                     res.send(err);
-
-                res.json({ message: 'Successfully deleted dish and removed associations' });
+                }
+                //remove document
+                dish.remove(function(err){
+                    if (err) {
+                        res.send(err);
+                    }
+                    res.json({payload: 'Dish Deleted!'});
+                });
             });
-        })
+        })//end of delete
+        
         //update a dish entry
         .put(function(req, res){
             Dish.findById(req.params.dish_id, function(err, dish){

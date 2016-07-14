@@ -11,6 +11,10 @@ var RestaurantSchema = new Schema({
     dishes : [{ type: Schema.Types.ObjectId, ref: 'Dish' }]
 });
 
+/*register middleware to clean references
+ *these are called 'hooks'
+ *document hooks only work when using 'remove' on document, not model
+ */
 RestaurantSchema.pre('remove', function(next){
     console.log('removing restaurant from associated cities...\n');
     this.model('City').update(
