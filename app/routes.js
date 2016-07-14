@@ -85,6 +85,64 @@ module.exports = function(app, router, mongoose) {
             });
         });
 
+    /***************************************
+          CITY / RESTAURANT ASSOCIATION
+    ****************************************/
+    router.route('/cities/restaurants/:restaurant_id')
+        //will return all cities that have this restaurant
+        .get(function(req, res){
+            City
+            .find({ restaurant: req.params.restaurant_id })
+            .exec(function (err, cities) {
+              if (err) res.send(err);
+              res.json(cities)
+            });
+        })
+
+        //add restaurant to specific city
+        .put(function(req, res){
+            console.log("\n" + req.body.city + "\n");
+            City.findById(req.body.city, function(err, city){
+                if (err) {
+                    res.send(err);
+                }
+                //update city db entry
+                city.restaurants.push(req.params.restaurant_id);
+
+                city.save(function(err){
+                    if (err) {
+                        res.send(err);
+                    }
+                    res.json({payload: 'City updated!'});
+                });
+            });
+        })
+
+        //delete a restaurant from a particular city
+        .delete(function(req, res) {
+          console.log(req.body.city);
+          City.findById(req.body.city, function(err, city){
+              if (err) {
+                  res.send(err);
+              }
+              //remove restaurant from city's array
+              var index = city.restaurants.indexOf(req.params.restaurant_id);
+              if (index >= 0) {
+                  city.restaurants.splice(index, 1);
+                  message = "restaurant deleted from this city!";
+              } else {
+                message = "That restaurant is in this city."
+              }
+
+              city.save(function(err){
+                  if (err) {
+                      res.send(err);
+                  }
+                  res.json({payload: message});
+              });
+          });
+        });
+
 
     /***********************
           RESTAURANT
