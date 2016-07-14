@@ -22,7 +22,7 @@ module.exports = function(app, router, mongoose) {
         .post(function(req, res){
             console.log(req.query);
             var restaurant = new Restaurant();
-            restaurant.name = req.query.name;
+            restaurant.name = req.body.name;
 
             restaurant.save(function(err){
                 if (err) {
