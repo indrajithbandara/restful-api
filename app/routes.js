@@ -1,5 +1,6 @@
 // app/routes.js
 var Restaurant = require('./models/restaurant');
+var Dish = require('./models/dish');
 
 module.exports = function(app, router, mongoose) {
 
@@ -22,7 +23,19 @@ module.exports = function(app, router, mongoose) {
         .post(function(req, res){
             console.log(req.query);
             var restaurant = new Restaurant();
+            //has to have a name
             restaurant.name = req.body.name;
+            //the rest is option for the sake of testing
+
+            if (req.body.description) {
+                restaurant.description = req.body.description;
+            }
+            if (req.body.address) {
+                restaurant.address = req.body.address;
+            }
+            if (req.body.rating) {
+                restaurant.rating = req.body.rating;
+            }
 
             restaurant.save(function(err){
                 if (err) {
@@ -31,6 +44,7 @@ module.exports = function(app, router, mongoose) {
                 res.json({payload: 'Restaurant created!'});
             });
         });//end of post
+    //END OF
 
     //route to get by id, working with single items
     router.route('/restaurants/:restaurant_id')
@@ -51,7 +65,19 @@ module.exports = function(app, router, mongoose) {
                     res.send(err);
                 }
                 //update restaurant db entry
-                restaurant.name = req.body.name;
+                if (req.body.name) {
+                    restaurant.name = req.body.name;
+                }
+                if (req.body.description) {
+                    restaurant.description = req.body.description;
+                }
+                if (req.body.address) {
+                    restaurant.address = req.body.address;
+                }
+                if (req.body.rating) {
+                    restaurant.rating = req.body.rating;
+                }
+
                 restaurant.save(function(err){
                     if (err) {
                         res.send(err);
@@ -72,5 +98,41 @@ module.exports = function(app, router, mongoose) {
                 res.json({ message: 'Successfully deleted' });
             });
         });
+
+    /***********************
+          DISH
+    ************************/
+
+    router.route('/dishes')
+        //get list of all dishes
+        .get(function(req, res){
+            Dish.find(function(err, data){
+                if (err) {
+                    res.send(err);
+                }
+                res.json(data);
+            });
+        })//end of get
+
+        //add new dish
+        .post(function(req, res){
+            console.log(req.query);
+            var dish = new Dish();
+            //has to have a name
+            dish.name = req.body.name;
+            //the rest is option for the sake of testing
+
+            if (req.body.cuisine) {
+                dish.description = req.body.cuisine;
+            }
+
+            dish.save(function(err){
+                if (err) {
+                    res.send(err);
+                }
+                res.json({payload: 'Dish created!'});
+            });
+        });//end of post
+    //END OF
 
 };//end of exports
