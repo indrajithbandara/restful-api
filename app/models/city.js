@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 
 var CitySchema = new Schema({
     name: String,
-    dishes : [{ type: Schema.Types.ObjectId, ref: 'Restaurant' }]
+    restaurants : [{ type: Schema.Types.ObjectId, ref: 'Restaurant' }]
 });
 
 module.exports = mongoose.model('City', CitySchema);
