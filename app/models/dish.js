@@ -8,4 +8,13 @@ var DishSchema = new Schema({
     cuisine: String
 });
 
+DishSchema.pre('remove', function(next){
+    this.model('Restaurant').update(
+        {dishes: this._id},
+        {$pull: {dishes: this._id}},
+        {multi: true},
+        next
+    );
+});
+
 module.exports = mongoose.model('Dish', DishSchema);
