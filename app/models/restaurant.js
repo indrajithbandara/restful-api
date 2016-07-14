@@ -11,4 +11,13 @@ var RestaurantSchema = new Schema({
     dishes : [{ type: Schema.Types.ObjectId, ref: 'Dish' }]
 });
 
+RestaurantSchema.pre('remove', function(next){
+    this.model('City').update(
+        {restaurants: this._id},
+        {$pull: {restaurants: this._id}},
+        {multi: true},
+        next
+    );
+});
+
 module.exports = mongoose.model('Restaurant', RestaurantSchema);
