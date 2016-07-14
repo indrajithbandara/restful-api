@@ -4,6 +4,8 @@ param = $1
 
 echo "you entered $1 \n"
 
+######### RESTAURANT RELATED #############
+
 #create item
 curl --data "name=Jack in the Box&description=fast food joint, larry david went there in curb" http://192.168.33.10:8080/api/restaurants
 
@@ -21,6 +23,14 @@ curl -i -H "Accept: application/json" -X PUT -d "name=In-n-Out" http://192.168.3
 #delete entry
 curl -i -H "Accept: application/json" -X DELETE http://192.168.33.10:8080/api/restaurants/57871ad14c275b04092d39c9
 
+
+######### RESTAURANT / DISH ASSOCIATIONS #############
+
+#add dish to restaurant
+curl -i -H "Accept: application/json" -X PUT -d "dish=57871d6eb6f9f31209e32b4d" http://192.168.33.10:8080/api/restaurants/dishes/578718a4a5ed538208adb025
+
+#get all dishes at a particular restaurant
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://192.168.33.10:8080/api/restaurants/dishes/578718a4a5ed538208adb025
 
 ######### DISH RELATED #############
 

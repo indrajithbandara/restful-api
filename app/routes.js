@@ -8,6 +8,10 @@ module.exports = function(app, router, mongoose) {
         res.json({payload: "hello world!!"});
     });
 
+    /***********************
+          RESTAURANT
+    ************************/
+
     router.route('/restaurants')
         //get list of all restaurants
         .get(function(req, res){
@@ -76,6 +80,53 @@ module.exports = function(app, router, mongoose) {
                 }
                 if (req.body.rating) {
                     restaurant.rating = req.body.rating;
+                }
+
+                restaurant.save(function(err){
+                    if (err) {
+                        res.send(err);
+                    }
+                    res.json({payload: 'Restaurant updated!'});
+                });
+            });
+        })
+
+        //delete a restaurant entry
+        .delete(function(req, res) {
+            Restaurant.remove({
+                _id: req.params.restaurant_id
+            }, function(err, bear) {
+                if (err)
+                    res.send(err);
+
+                res.json({ message: 'Successfully deleted' });
+            });
+        });
+
+    /***************************************
+          RESTAURANT / DISH ASSOCIATION
+    ****************************************/
+    router.route('/restaurants/dishes/:restaurant_id')
+        //will return and display the json for that specific restaurant's dishes
+        .get(function(req, res){
+            Restaurant.findById(req.params.restaurant_id, function(err, restaurant){
+                if (err) {
+                  res.send(err);
+                }
+                var payload = restaurant.dishes;
+                res.json(payload);
+            });
+        })
+
+        //add dish to dishes at particular restaurant
+        .put(function(req, res){
+            Restaurant.findById(req.params.restaurant_id, function(err, restaurant){
+                if (err) {
+                    res.send(err);
+                }
+                //update restaurant db entry
+                if (req.body.dish) {
+                    restaurant.dishes.push(req.body.dish);
                 }
 
                 restaurant.save(function(err){
