@@ -96,7 +96,7 @@ module.exports = function(app, router, mongoose) {
         .delete(function(req, res) {
             Restaurant.remove({
                 _id: req.params.restaurant_id
-            }, function(err, bear) {
+            }, function(err, restaurant) {
                 if (err)
                     res.send(err);
 
@@ -199,18 +199,51 @@ module.exports = function(app, router, mongoose) {
         });//end of post
     //END OF
 
+    /* SPECIFIC TO ONE DISH */
     router.route('/dishes/:dish_id')
-        //delete a restaurant entry
+        //will return and display the json for that specific dish
+        .get(function(req, res){
+            Dish.findById(req.params.dish_id, function(err, dish){
+                if (err) {
+                  res.send(err);
+                }
+                res.json(dish);
+            });
+        })
+
+        //delete a dish entry
         .delete(function(req, res) {
             Dish.remove({
                 _id: req.params.dish_id
-            }, function(err, bear) {
+            }, function(err, dish) {
                 if (err)
                     res.send(err);
 
-                res.json({ message: 'Successfully deleted disha and removed associations' });
+                res.json({ message: 'Successfully deleted dish and removed associations' });
+            });
+        })
+        //update a dish entry
+        .put(function(req, res){
+            Dish.findById(req.params.dish_id, function(err, dish){
+                if (err) {
+                    res.send(err);
+                }
+                //update dish db entry
+                if (req.body.name) {
+                    dish.name = req.body.name;
+                }
+                if (req.body.cuisine) {
+                    dish.description = req.body.cuisine;
+                }
+
+                dish.save(function(err){
+                    if (err) {
+                        res.send(err);
+                    }
+                    res.json({payload: 'Dish updated!'});
+                });
             });
         });
-    //END OF
+        //END OF
 
 };//end of exports
