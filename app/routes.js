@@ -187,7 +187,7 @@ module.exports = function(app, router, mongoose) {
             //the rest is option for the sake of testing
 
             if (req.body.cuisine) {
-                dish.description = req.body.cuisine;
+                dish.cuisine = req.body.cuisine;
             }
 
             dish.save(function(err){
@@ -233,7 +233,7 @@ module.exports = function(app, router, mongoose) {
                     dish.name = req.body.name;
                 }
                 if (req.body.cuisine) {
-                    dish.description = req.body.cuisine;
+                    dish.cuisine = req.body.cuisine;
                 }
 
                 dish.save(function(err){
