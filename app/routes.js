@@ -109,12 +109,12 @@ module.exports = function(app, router, mongoose) {
     router.route('/restaurants/dishes/:restaurant_id')
         //will return and display the json for that specific restaurant's dishes
         .get(function(req, res){
-            Restaurant.findById(req.params.restaurant_id, function(err, restaurant){
-                if (err) {
-                  res.send(err);
-                }
-                var payload = restaurant.dishes;
-                res.json(payload);
+            Restaurant
+            .findById(req.params.restaurant_id)
+            .populate('dishes')
+            .exec(function (err, restaurant) {
+              if (err) res.send(err);
+              res.json(restaurant.dishes)
             });
         })
 
