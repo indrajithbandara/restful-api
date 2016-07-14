@@ -15,12 +15,13 @@ module.exports = function(app, router, mongoose) {
     router.route('/restaurants')
         //get list of all restaurants
         .get(function(req, res){
-            Restaurant.find(function(err, data){
-                if (err) {
-                    res.send(err);
-                }
-                res.json(data);
-            });
+            Restaurant
+            .find()
+            .populate('dishes')
+            .exec(function (err, restaurants) {
+              if (err) res.send(err);
+              res.json(restaurants);
+            })
         })//end of get
 
         //add new restaurant
@@ -106,28 +107,27 @@ module.exports = function(app, router, mongoose) {
     /***************************************
           RESTAURANT / DISH ASSOCIATION
     ****************************************/
-    router.route('/restaurants/dishes/:restaurant_id')
-        //will return and display the json for that specific restaurant's dishes
+
+    router.route('/restaurants/dishes/:dish_id')
+        //will return all restaurants containing this dish
         .get(function(req, res){
             Restaurant
-            .findById(req.params.restaurant_id)
-            .populate('dishes')
-            .exec(function (err, restaurant) {
+            .find({ dishes: req.params.dish_id })
+            .exec(function (err, restaurants) {
               if (err) res.send(err);
-              res.json(restaurant.dishes)
+              res.json(restaurants)
             });
         })
 
         //add dish to dishes at particular restaurant
         .put(function(req, res){
-            Restaurant.findById(req.params.restaurant_id, function(err, restaurant){
+            console.log("\n" + req.body.restaurant + "\n");
+            Restaurant.findById(req.body.restaurant, function(err, restaurant){
                 if (err) {
                     res.send(err);
                 }
                 //update restaurant db entry
-                if (req.body.dish) {
-                    restaurant.dishes.push(req.body.dish);
-                }
+                restaurant.dishes.push(req.params.dish_id);
 
                 restaurant.save(function(err){
                     if (err) {
@@ -140,13 +140,13 @@ module.exports = function(app, router, mongoose) {
 
         //delete a dish from a particular restaurant
         .delete(function(req, res) {
-          console.log(req.body.dish);
-          Restaurant.findById(req.params.restaurant_id, function(err, restaurant){
+          console.log(req.body.restaurant);
+          Restaurant.findById(req.body.restaurant, function(err, restaurant){
               if (err) {
                   res.send(err);
               }
               //remove dish from restaurant's array
-              var index = restaurant.dishes.indexOf(req.body.dish);
+              var index = restaurant.dishes.indexOf(req.params.dish_id);
               if (index >= 0) {
                   restaurant.dishes.splice(index, 1);
                   message = "dish deleted from this restaurant!";

@@ -15,10 +15,10 @@ echo "getting list of all restaurants \n"
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://192.168.33.10:8080/api/restaurants/
 
 #get single restaurant by id
-curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://192.168.33.10:8080/api/restaurants/5787053e390f72d406fe6c58
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://192.168.33.10:8080/api/restaurants/57871af34c275b04092d39ca
 
 #update entry
-curl -i -H "Accept: application/json" -X PUT -d "name=In-n-Out" http://192.168.33.10:8080/api/restaurants/578718a4a5ed538208adb025
+curl -i -H "Accept: application/json" -X PUT -d "name=In-n-Out" http://192.168.33.10:8080/api/restaurants/57871af34c275b04092d39ca
 
 #delete entry
 curl -i -H "Accept: application/json" -X DELETE http://192.168.33.10:8080/api/restaurants/57871ad14c275b04092d39c9
@@ -27,13 +27,13 @@ curl -i -H "Accept: application/json" -X DELETE http://192.168.33.10:8080/api/re
 ######### RESTAURANT / DISH ASSOCIATIONS #############
 
 #add dish to restaurant
-curl -i -H "Accept: application/json" -X PUT -d "dish=57871d6eb6f9f31209e32b4d" http://192.168.33.10:8080/api/restaurants/dishes/578718a4a5ed538208adb025
+curl -i -H "Accept: application/json" -X PUT -d "restaurant=57871af34c275b04092d39ca" http://192.168.33.10:8080/api/restaurants/dishes/57871d6eb6f9f31209e32b4d
 
-#get all dishes at a particular restaurant
-curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://192.168.33.10:8080/api/restaurants/dishes/578718a4a5ed538208adb025
+#get all restaurants with a particular dish
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://192.168.33.10:8080/api/restaurants/dishes/57871d6eb6f9f31209e32b4d
 
 #delete association
-curl -i -H "Accept: application/json" -X DELETE -d "dish=57871d6eb6f9f31209e32b4d" http://192.168.33.10:8080/api/restaurants/dishes/578718a4a5ed538208adb025
+curl -i -H "Accept: application/json" -X DELETE -d "restaurant=57871af34c275b04092d39ca" http://192.168.33.10:8080/api/restaurants/dishes/578718a4a5ed538208adb025
 
 ######### DISH RELATED #############
 
