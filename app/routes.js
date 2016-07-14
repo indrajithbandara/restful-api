@@ -59,6 +59,18 @@ module.exports = function(app, router, mongoose) {
                     res.json({payload: 'Restaurant updated!'});
                 });
             });
+        })
+
+        //delete a restaurant entry
+        .delete(function(req, res) {
+            Restaurant.remove({
+                _id: req.params.restaurant_id
+            }, function(err, bear) {
+                if (err)
+                    res.send(err);
+
+                res.json({ message: 'Successfully deleted' });
+            });
         });
 
 };//end of exports
