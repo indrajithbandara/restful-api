@@ -9,9 +9,10 @@ var DishSchema = new Schema({
 });
 
 DishSchema.pre('remove', function(next){
+    console.log('removing dish from associated restaurants...\n');
     this.model('Restaurant').update(
         {dishes: this._id},
-        {$pull: {dishes: {_id : this._id}}},
+        {$pull: { "dishes": {_id : this._id}}},
         {multi: true},
         next
     );
