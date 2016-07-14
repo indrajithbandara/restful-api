@@ -11,7 +11,7 @@ var RestaurantSchema = new Schema({
     dishes : [{ type: Schema.Types.ObjectId, ref: 'Dish' }]
 });
 
-RestaurantSchema.pre('remove', {doc: true} function(next){
+RestaurantSchema.pre('remove', {doc: true}, function(next){
     console.log('removing restaurant from associated cities...\n');
     this.model('City').update(
         {restaurants: this._id},
