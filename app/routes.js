@@ -1,12 +1,45 @@
 // app/routes.js
 var Restaurant = require('./models/restaurant');
 var Dish = require('./models/dish');
+var City = require('./models/city');
 
 module.exports = function(app, router, mongoose) {
 
     router.get('/', function(req, res){
         res.json({payload: "hello world!!"});
     });
+
+    /***********************
+          CITY
+    ************************/
+    router.route('/cities')
+        //get list of all cities
+        .get(function(req, res){
+            City
+            .find()
+            .populate('restaurants')
+            .exec(function (err, cities) {
+              if (err) res.send(err);
+              res.json(cities);
+            })
+        })//end of get
+
+        //add new city
+        .post(function(req, res){
+            console.log(req.query);
+            var city = new City();
+            //has to have a name
+            city.name = req.body.name;
+
+            city.save(function(err){
+                if (err) {
+                    res.send(err);
+                }
+                res.json({payload: 'City created!'});
+            });
+        });//end of post
+    //END OF
+
 
     /***********************
           RESTAURANT
@@ -51,6 +84,7 @@ module.exports = function(app, router, mongoose) {
         });//end of post
     //END OF
 
+    /*SPECIFIC RESTAURANTS*/
     //route to get by id, working with single items
     router.route('/restaurants/:restaurant_id')
         //will return and display the json for that specific restaurant
