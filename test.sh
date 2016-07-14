@@ -4,6 +4,10 @@ param = $1
 
 echo "you entered $1 \n"
 
+######### CITY RELATED #############
+#TODO: all of this
+
+
 ######### RESTAURANT RELATED #############
 
 #create item
@@ -42,3 +46,6 @@ curl --data "name=Hamburger&cuisine=American" http://192.168.33.10:8080/api/dish
 
 #get all dishes
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://192.168.33.10:8080/api/dishes/
+
+#TODO: delete item
+#THIS WILL REQUIRE MIDDLEWARE TO CLEAN UP ALL ASSOCIATIONS
