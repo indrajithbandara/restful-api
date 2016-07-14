@@ -15,7 +15,7 @@ var router = express.Router();
 
 //database setup
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/passport');
+mongoose.connect('mongodb://localhost/restfulAPI');
 
 router.use(function(req, res, next) {
     console.log('Middleware!');
