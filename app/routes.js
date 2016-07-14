@@ -200,17 +200,17 @@ module.exports = function(app, router, mongoose) {
     //END OF
 
     router.route('/dishes/:dish_id')
-    //delete a restaurant entry
-    .delete(function(req, res) {
-        Dish.remove({
-            _id: req.params.dish_id
-        }, function(err, bear) {
-            if (err)
-                res.send(err);
+        //delete a restaurant entry
+        .delete(function(req, res) {
+            Dish.remove({
+                _id: req.params.dish_id
+            }, function(err, bear) {
+                if (err)
+                    res.send(err);
 
-            res.json({ message: 'Successfully deleted disha and removed associations' });
+                res.json({ message: 'Successfully deleted disha and removed associations' });
+            });
         });
-    });
     //END OF
 
 };//end of exports
