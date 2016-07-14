@@ -40,6 +40,51 @@ module.exports = function(app, router, mongoose) {
         });//end of post
     //END OF
 
+    /*SPECIFIC TO ONE CITY*/
+    //route to get by id, working with single items
+    router.route('/cities/:cities_id')
+        //will return and display the json for that specific city
+        .get(function(req, res){
+            City.findById(req.params.city_id, function(err, city){
+                if (err) {
+                  res.send(err);
+                }
+                res.json(city);
+            });
+        })
+
+        //change and override information for this specific city
+        .put(function(req, res){
+            City.findById(req.params.city_id, function(err, city){
+                if (err) {
+                    res.send(err);
+                }
+                //update city db entry
+                if (req.body.name) {
+                    city.name = req.body.name;
+                }
+
+                city.save(function(err){
+                    if (err) {
+                        res.send(err);
+                    }
+                    res.json({payload: 'City updated!'});
+                });
+            });
+        })
+
+        //delete a city entry
+        .delete(function(req, res) {
+            City.remove({
+                _id: req.params.city_id
+            }, function(err, city) {
+                if (err)
+                    res.send(err);
+
+                res.json({ message: 'Successfully deleted' });
+            });
+        });
+
 
     /***********************
           RESTAURANT
