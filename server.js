@@ -17,10 +17,6 @@ var router = express.Router();
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/restfulAPI');
 
-router.use(function(req, res, next) {
-    console.log('Middleware!');
-    next();
-});
 //all routes will use /api
 app.use('/api', router);
 
