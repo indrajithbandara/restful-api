@@ -32,6 +32,9 @@ curl -i -H "Accept: application/json" -X PUT -d "dish=57871d6eb6f9f31209e32b4d" 
 #get all dishes at a particular restaurant
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://192.168.33.10:8080/api/restaurants/dishes/578718a4a5ed538208adb025
 
+#delete association
+curl -i -H "Accept: application/json" -X DELETE -d "dish=57871d6eb6f9f31209e32b4d" http://192.168.33.10:8080/api/restaurants/dishes/578718a4a5ed538208adb025
+
 ######### DISH RELATED #############
 
 #create item

@@ -138,16 +138,29 @@ module.exports = function(app, router, mongoose) {
             });
         })
 
-        //delete a restaurant entry
+        //delete a dish from a particular restaurant
         .delete(function(req, res) {
-            Restaurant.remove({
-                _id: req.params.restaurant_id
-            }, function(err, bear) {
-                if (err)
-                    res.send(err);
+          console.log(req.body.dish);
+          Restaurant.findById(req.params.restaurant_id, function(err, restaurant){
+              if (err) {
+                  res.send(err);
+              }
+              //remove dish from restaurant's array
+              var index = restaurant.dishes.indexOf(req.body.dish);
+              if (index >= 0) {
+                  restaurant.dishes.splice(index, 1);
+                  message = "dish deleted from this restaurant!";
+              } else {
+                message = "That dish is not currently served at this restaurant."
+              }
 
-                res.json({ message: 'Successfully deleted' });
-            });
+              restaurant.save(function(err){
+                  if (err) {
+                      res.send(err);
+                  }
+                  res.json({payload: message});
+              });
+          });
         });
 
     /***********************
