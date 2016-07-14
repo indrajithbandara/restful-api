@@ -11,11 +11,11 @@ var RestaurantSchema = new Schema({
     dishes : [{ type: Schema.Types.ObjectId, ref: 'Dish' }]
 });
 
-RestaurantSchema.pre('remove', {doc: true}, function(next){
+RestaurantSchema.pre('remove', function(next){
     console.log('removing restaurant from associated cities...\n');
     this.model('City').update(
-        {restaurants: this._id},
-        {$pull: { "restaurants": {_id : this._id}}},
+        {restaurants: {$in: this.restaurants}},
+        {$pull: { restaurants: this._id}},
         {multi: true},
         next
     );
