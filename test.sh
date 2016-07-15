@@ -23,9 +23,9 @@ curl -i -H "Accept: application/json" -X DELETE http://107.170.230.36:8080/api/c
 ######### CITY / RESTAURANT ASSOCIATIONS #############
 
 #add restaurant to city
-curl -i -H "Accept: application/json" -X PUT -d "city=57886580a6302d5b426d74e3" http://107.170.230.36:8080/api/cities/restaurants/5788474ca6302d5b426d74e2
+curl -i -H "Accept: application/json" -X PUT -d "city=[PLACE CITY ID HERE]" http://107.170.230.36:8080/api/cities/restaurants/[PLACE RESTAURANT ID HERE]
 
-#get all restaurants with a particular dish
+#get all cities with a particular restaurant
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://107.170.230.36:8080/api/restaurants/dishes/5787bd02d5a50f453a12704c
 
 #delete association
@@ -34,7 +34,7 @@ curl -i -H "Accept: application/json" -X DELETE -d "restaurant=57871af34c275b040
 ######### RESTAURANT RELATED #############
 
 #create item
-curl --data "name=Jack in the Box&description=fast food joint, larry david went there in curb" http://107.170.230.36:8080/api/restaurants
+curl --data "name=delete this" http://107.170.230.36:8080/api/restaurants
 
 echo "getting list of all restaurants \n"
 
@@ -42,19 +42,19 @@ echo "getting list of all restaurants \n"
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://107.170.230.36:8080/api/restaurants/
 
 #get single restaurant by id
-curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://107.170.230.36:8080/api/restaurants/5787bd02d5a50f453a12704c
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://107.170.230.36:8080/api/restaurants/5788699ccbc86c0a446233fb
 
 #update entry
-curl -i -H "Accept: application/json" -X PUT -d "name=In-n-Out" http://107.170.230.36:8080/api/restaurants/5787f7ef18857cde3ef00479
+curl -i -H "Accept: application/json" -X PUT -d "name=Pappy's Smokin' Barbeque" http://107.170.230.36:8080/api/restaurants/5788699ccbc86c0a446233fb
 
 #delete entry
-curl -i -H "Accept: application/json" -X DELETE http://107.170.230.36:8080/api/restaurants/57871ad14c275b04092d39c9
+curl -i -H "Accept: application/json" -X DELETE http://107.170.230.36:8080/api/restaurants/578846e4a6302d5b426d74e1
 
 
 ######### RESTAURANT / DISH ASSOCIATIONS #############
 
 #add dish to restaurant
-curl -i -H "Accept: application/json" -X PUT -d "restaurant=5787f7ef18857cde3ef00479" http://107.170.230.36:8080/api/restaurants/dishes/5788474ca6302d5b426d74e2
+curl -i -H "Accept: application/json" -X PUT -d "restaurant=5788699ccbc86c0a446233fb" http://107.170.230.36:8080/api/restaurants/dishes/5788474ca6302d5b426d74e2
 
 #get all restaurants with a particular dish
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://107.170.230.36:8080/api/restaurants/dishes/5787bd02d5a50f453a12704c
@@ -65,7 +65,7 @@ curl -i -H "Accept: application/json" -X DELETE -d "restaurant=57871af34c275b040
 ######### DISH RELATED #############
 
 #create item
-curl --data "name=Shrimp&cuisine=Seafood" http://107.170.230.36:8080/api/dishes
+curl --data "name=Pulled Pork&cuisine=BBQ" http://107.170.230.36:8080/api/dishes
 
 #get all dishes
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://107.170.230.36:8080/api/dishes/
