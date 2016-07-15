@@ -48,7 +48,7 @@ module.exports = function(app, router, mongoose) {
             City
             .findById(req.params.city_id)
             .populate('restaurants')
-            exec(function(err, city){
+            .exec(function(err, city){
                 if (err) {
                   res.send(err);
                 }
