@@ -45,7 +45,10 @@ module.exports = function(app, router, mongoose) {
     router.route('/cities/:city_id')
         //will return and display the json for that specific city
         .get(function(req, res){
-            City.findById(req.params.city_id, function(err, city){
+            City
+            .findById(req.params.city_id)
+            .populate('restaurants')
+            exec(function(err, city){
                 if (err) {
                   res.send(err);
                 }
@@ -368,7 +371,7 @@ module.exports = function(app, router, mongoose) {
                 });
             });
         })//end of delete
-        
+
         //update a dish entry
         .put(function(req, res){
             Dish.findById(req.params.dish_id, function(err, dish){
