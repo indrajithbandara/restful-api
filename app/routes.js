@@ -5,9 +5,6 @@ var City = require('./models/city');
 
 module.exports = function(app, router, mongoose) {
 
-    router.get('/', function(req, res){
-        res.json({payload: "hello world!!"});
-    });
 
     /***********************
           CITY
