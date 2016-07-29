@@ -5,7 +5,6 @@ var City = require('./models/city');
 
 module.exports = function(app, router, mongoose) {
 
-
     /***********************
           CITY
     ************************/
