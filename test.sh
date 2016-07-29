@@ -1,8 +1,3 @@
-echo "posting request..."
-
-param = $1
-
-echo "you entered $1 \n"
 
 ######### CITY RELATED #############
 #get all cities
