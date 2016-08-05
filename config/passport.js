@@ -27,6 +27,37 @@ module.exports = function(passport) {
                     return done(null, user);
             });
         });
-    }));
+    }));//end of login
+
+    //sign up
+    passport.use('signup', new LocalStrategy({
+        usernameField : 'username',
+        passwordField : 'password',
+    },
+    function(req, username, password, done){
+        if (username)
+            username = username.toLowerCase();
+
+        process.nextTick(function() {
+            User.findOne({'username' : username}, function(err, user){
+                if (err)
+                    return done(err);
+                if (user) {
+                    return done(null, false, req.flash('signupMessage', 'Usename already taken.'));
+                } else {
+
+                    var newUser = new User();
+                    newUser.username = req.username;
+                    newUser.password = newUser.generateHash(password);
+
+                    newUser.save(function(err){
+                        if (err)
+                            return done(err);
+
+                        return done(null, newUser);
+                    });
+                }});//end of user.findone()
+        });//end of process.nextTick()
+    }));//end of signup
 
 };//end of exports
