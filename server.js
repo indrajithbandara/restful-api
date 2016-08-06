@@ -20,12 +20,17 @@ var router = express.Router();
 var mongoose = require('mongoose');
 mongoose.connect(config.database);
 
+//passport setup
+require('./config/passport')(passport);
+app.use(passport.initialize());
+
+
 //all routes will use /api
 app.use('/api', router);
 
 //routes
-require('./app/routes.js')(app, router, mongoose); // load our routes and pass in our app
-require('./app/userRoutes.js')(app, router, mongoose); // load our user routes and pass in our app
+require('./app/routes.js')(app, router, passport); // load our routes and pass in our app
+require('./app/userRoutes.js')(app, router, passport); // load our user routes and pass in our app
 
 app.listen(app.get('port'), function(){
     console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');

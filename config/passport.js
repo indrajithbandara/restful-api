@@ -11,6 +11,7 @@ module.exports = function(passport) {
     passport.use('login', new LocalStrategy({
         usernameField : 'username',
         passwordField : 'password',
+        passReqToCallback : true
     },
     function(req, username, password, done){
         if (username)
@@ -20,9 +21,9 @@ module.exports = function(passport) {
                 if (err)
                     return done(err);
                 if (!user)
-                    return done(null, false, req.flash('loginMessage', 'No Such User Found.'));
+                    return done(null, false, {error : "Username does not exist."});
                 if(!user.validPassword(password))
-                    return done(null, false, req.flash('loginMessage', 'Wrong Password.'));
+                    return done(null, false, {error : "Wrong password."});
                 else
                     return done(null, user);
             });
@@ -33,6 +34,7 @@ module.exports = function(passport) {
     passport.use('signup', new LocalStrategy({
         usernameField : 'username',
         passwordField : 'password',
+        passReqToCallback : true
     },
     function(req, username, password, done){
         if (username)
@@ -43,11 +45,11 @@ module.exports = function(passport) {
                 if (err)
                     return done(err);
                 if (user) {
-                    return done(null, false, req.flash('signupMessage', 'Usename already taken.'));
+                    return done(null, false, {error : "That username is not available."});
                 } else {
 
                     var newUser = new User();
-                    newUser.username = req.username;
+                    newUser.username = username;
                     newUser.password = newUser.generateHash(password);
 
                     newUser.save(function(err){
