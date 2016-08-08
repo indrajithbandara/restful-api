@@ -8,7 +8,8 @@ var RestaurantSchema = new Schema({
     description: String,
     address: String,
     rating: Number,
-    dishes : [{ type: Schema.Types.ObjectId, ref: 'Dish' }]
+    dishes : [{ type: Schema.Types.ObjectId, ref: 'Dish' }],
+    owner: {type: Schema.Types.ObjectId, ref: 'User'}
 });
 
 /*register middleware to clean references

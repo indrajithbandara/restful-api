@@ -15,6 +15,7 @@ module.exports = function(app, router){
 				if (err) {
 					return res.json({success: false, message: 'Token not valid.'});
 				} else {
+					//saves login info to the request
 					req.credentials = credentials;
 					next();
 				}

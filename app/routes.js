@@ -151,7 +151,8 @@ module.exports = function(app, router, mongoose) {
         //get list of all restaurants
         .get(function(req, res){
             Restaurant
-            .find()
+            //find restaurants created by current user
+            .find({ owner: req.credentials._doc._id })
             .populate('dishes')
             .exec(function (err, restaurants) {
               if (err) res.send(err);
@@ -176,6 +177,9 @@ module.exports = function(app, router, mongoose) {
             if (req.body.rating) {
                 restaurant.rating = req.body.rating;
             }
+
+            //save the creator User id
+            restaurant.owner = req.credentials._doc._id;
 
             restaurant.save(function(err){
                 if (err) {
